@@ -3,3 +3,4 @@ django-crontab
 djangorestframework
 django-cors-headers
 djangorestframework-simplejwt
+gunicorn
