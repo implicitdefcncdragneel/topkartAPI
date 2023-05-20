@@ -3,8 +3,9 @@ from rest_framework import generics,status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from api.order.models import Order
-from api.order.serializers import LightningDealSerializer, OrderSerializer, OrderStatusSerializer
+from api.order.serializers import LightningDealSerializer, OrderApprovalSerializer, OrderSerializer, OrderStatusSerializer
 from api.product.models import LightningDeal
+from api.utils.permission import IsTAdmin
 from api.utils.renderers import CustomeJSONRenderer
 
 # Create your views here.
@@ -54,3 +55,10 @@ class OrderStatusView(generics.RetrieveAPIView):
         if id is not None:
             queryset = queryset.filter(id=id)
         return queryset
+    
+class OrderActionView(generics.UpdateAPIView):
+    serializer_class = OrderApprovalSerializer
+    queryset = Order.objects.all()
+    permission_classes = (IsTAdmin,)
+    renderer_classes = [CustomeJSONRenderer]
+    lookup_field = "id"

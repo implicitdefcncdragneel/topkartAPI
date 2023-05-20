@@ -32,7 +32,8 @@ class OrderSerializer(serializers.ModelSerializer):
 
         if quantity > product.available_units:
             raise serializers.ValidationError("Quantity cannot be greater than available units.")
-
+        product.available_units = product.available_units - quantity
+        product.save()
         order = Order.objects.create(user=user, product=product, quantity=quantity)
         return order
     
@@ -46,3 +47,9 @@ class OrderStatusSerializer(serializers.ModelSerializer):
     def get_product_name(self, obj):
         product_name = obj.product.product_name
         return product_name
+
+class OrderApprovalSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Order
+        fields = ('id', 'status')
