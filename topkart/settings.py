@@ -31,6 +31,7 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "corsheaders",
+    "django_crontab",
     "rest_framework",
     "rest_framework_simplejwt",
 ]
@@ -85,6 +86,9 @@ DATABASES = {
     }
 }
 
+CRONJOBS =[
+    ('0 0 * * *','api.utils.cron_job.refresh_lightning_deals'),
+]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
