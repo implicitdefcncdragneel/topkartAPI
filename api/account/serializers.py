@@ -19,7 +19,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     
     default_error_messages = {
-        "no_active_account": ["Bad Request","No active account found with the given credentials"]
+        "no_active_account": "No active account found with the given credentials"
     }
 
     @classmethod
