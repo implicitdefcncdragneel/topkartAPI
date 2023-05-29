@@ -1,6 +1,18 @@
 version: "3.7"
 
 services:
+
+  seq:
+    image: datalust/seq
+    ports:
+      - "5341:80"
+    environment:
+      ACCEPT_EULA: "Y"
+    networks:
+      - topkartapi_network
+    links:
+      - topkartapi
+
   topkartapi:
     build:
       context: .
@@ -18,7 +30,8 @@ services:
       - 8000:8000
     networks:
       - topkartapi_network
-
+  
+  
 networks:
   topkartapi_network:
     driver: bridge

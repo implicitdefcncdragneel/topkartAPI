@@ -1,7 +1,6 @@
 from pathlib import Path
 from datetime import timedelta
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -15,7 +14,7 @@ SECRET_KEY = 'django-insecure-f%uuh)=be@+^r=e3$^r$oqg2$969x1#%4&riy=gq(5eyt^dl8f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
 
 
 # Application definition
@@ -149,4 +148,26 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
     "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'seq': {
+            'class': 'seqlog.structured_logging.SeqLogHandler',
+            'server_url': 'http://seq:80/',
+            'json_encoder_class': 'json.encoder.JSONEncoder'        
+            },
+    },
+    'root': {
+        'handlers': ['seq'],
+        'level': 'INFO'
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['seq'],
+            'level': 'INFO'
+        },
+    },
 }
